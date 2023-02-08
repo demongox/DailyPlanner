@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/planRowLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <CheckBox
+        android:id="@+id/checkBoxDone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtPlanTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/checkBoxDone"
+        app:layout_constraintEnd_toStartOf="@+id/checkBoxDone"
+        app:layout_constraintTop_toTopOf="@+id/checkBoxDone" />
+
+    <TextView
+        android:id="@+id/txtPlanDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toStartOf="@+id/txtPlanTitle"
+        app:layout_constraintTop_toTopOf="@+id/txtPlanTitle" />
+
+    <TextView
+        android:id="@+id/txtPlanTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toStartOf="@+id/txtPlanDate"
+        app:layout_constraintTop_toTopOf="@+id/txtPlanDate" />
+</androidx.constraintlayout.widget.ConstraintLayout>

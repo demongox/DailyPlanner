@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/task_name"
+        app:layout_constraintBottom_toBottomOf="@+id/editTaskName"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/editTaskName" />
+
+    <EditText
+        android:id="@+id/editTaskName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:hint="@string/task_name"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/task_time"
+        app:layout_constraintBottom_toBottomOf="@+id/editTaskTime"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/editTaskTime" />
+
+    <EditText
+        android:id="@+id/editTaskTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:focusable="false"
+        android:hint="@string/task_time"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:onClick="selectDate"
+        app:layout_constraintStart_toStartOf="@+id/editTaskName"
+        app:layout_constraintTop_toBottomOf="@+id/editTaskName" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/task_duration"
+        app:layout_constraintBottom_toBottomOf="@+id/editTaskDuration"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/editTaskDuration" />
+
+    <EditText
+        android:id="@+id/editTaskDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/task_duration"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toStartOf="@+id/editTaskTime"
+        app:layout_constraintTop_toBottomOf="@+id/editTaskTime" />
+
+    <CheckBox
+        android:id="@+id/chkMonday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/monday"
+        app:layout_constraintStart_toStartOf="@+id/editTaskDuration"
+        app:layout_constraintTop_toBottomOf="@+id/editTaskDuration" />
+
+    <CheckBox
+        android:id="@+id/chkTuesday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tuesday"
+        app:layout_constraintStart_toEndOf="@+id/chkMonday"
+        app:layout_constraintTop_toTopOf="@+id/chkMonday" />
+
+    <CheckBox
+        android:id="@+id/chkWednesday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wednesday"
+        app:layout_constraintStart_toStartOf="@+id/chkMonday"
+        app:layout_constraintTop_toBottomOf="@+id/chkMonday" />
+
+    <CheckBox
+        android:id="@+id/chkThursday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/thursday"
+        app:layout_constraintStart_toEndOf="@+id/chkWednesday"
+        app:layout_constraintTop_toTopOf="@+id/chkWednesday" />
+
+    <CheckBox
+        android:id="@+id/chkFriday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/friday"
+        app:layout_constraintStart_toStartOf="@+id/chkWednesday"
+        app:layout_constraintTop_toBottomOf="@+id/chkWednesday" />
+
+    <CheckBox
+        android:id="@+id/chkSaturday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/saturday"
+        app:layout_constraintStart_toEndOf="@+id/chkFriday"
+        app:layout_constraintTop_toTopOf="@+id/chkFriday" />
+
+    <CheckBox
+        android:id="@+id/chkSunday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sunday"
+        app:layout_constraintStart_toStartOf="@+id/chkFriday"
+        app:layout_constraintTop_toBottomOf="@+id/chkFriday" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSubmitNewReminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/add_new_task"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/chkSunday" />
+
+    <TextView
+        android:id="@+id/txtShowDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnAddTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_input_add"
+        android:background="@null"/>
+
+    <ImageButton
+        android:id="@+id/btnSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/btnAddTask"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnAddTask"
+        app:srcCompat="@android:drawable/ic_menu_search"
+        android:background="@null"/>
+
+    <ImageButton
+        android:id="@+id/btnReminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnAddTask"
+        app:layout_constraintTop_toTopOf="@+id/btnAddTask"
+        app:srcCompat="@android:drawable/ic_popup_reminder"
+        android:background="@null"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/repeat_day"
+        app:layout_constraintBottom_toBottomOf="@+id/chkMonday"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/chkMonday" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

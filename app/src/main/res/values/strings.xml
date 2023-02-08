@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">DailyPlanner</string>
+    <string name="add_new_task">Add New Task</string>
+    <string name="task_name">Task Name</string>
+    <string name="task_date">Task Date</string>
+    <string name="task_time">Task Time</string>
+    <string name="repeat_every_day">Repeat Everyday</string>
+    <string name="repeat_day">Repeat Day</string>
+    <string name="close">Close</string>
+    <string name="task_duration">Task Duration</string>
+    <string name="add_reminder">Add Reminder</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+</resources>
