@@ -7,7 +7,14 @@
         <entry key="..\:/Programming/AndroidStudio/DailyPlanner/app/src/main/res/layout/add_reminder_layout.xml" value="0.6" />
         <entry key="..\:/Programming/AndroidStudio/DailyPlanner/app/src/main/res/layout/add_task_layout.xml" value="0.4" />
         <entry key="..\:/Programming/AndroidStudio/DailyPlanner/app/src/main/res/layout/search_layout.xml" value="0.25" />
-        <entry key="..\:/Programming/AndroidStudio/DailyPlanner/app/src/main/res/layout/view_daily_plane_recycle_view.xml" value="0.25" />
+        <entry key="..\:/Programming/AndroidStudio/DailyPlanner/app/src/main/res/layout/show_all_tasks_layout.xml" value="0.25" />
+        <entry key="..\:/Programming/AndroidStudio/DailyPlanner/app/src/main/res/layout/view_all_plan_recycle_view.xml" value="0.72" />
+        <entry key="..\:/Programming/AndroidStudio/DailyPlanner/app/src/main/res/layout/view_all_plane_recycle_view.xml" value="0.25" />
+        <entry key="..\:/Programming/AndroidStudio/DailyPlanner/app/src/main/res/layout/view_daily_plan_recycle_view.xml" value="0.25" />
+        <entry key="..\:/Programming/AndroidStudio/DailyPlanner/app/src/main/res/layout/view_daily_plane_recycle_view.xml" value="0.72" />
+        <entry key="..\:/Programming/AndroidStudio/DailyPlanner/app/src/main/res/layout/widget_list_item.xml" value="1.6" />
+        <entry key="..\:/Programming/AndroidStudio/DailyPlanner/app/src/main/res/layout/widget_list_items_layout.xml" value="0.25" />
+        <entry key="..\:/Programming/AndroidStudio/DailyPlanner/app/src/main/res/layout/widget_screen.xml" value="0.264" />
       </map>
     </option>
   </component>

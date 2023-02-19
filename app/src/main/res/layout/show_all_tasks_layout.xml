@@ -59,14 +59,4 @@
         app:layout_constraintTop_toTopOf="@+id/btnAddTask"
         app:srcCompat="@android:drawable/ic_popup_reminder"
         android:background="@null"/>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnShowAllTasks"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/all_tasks"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

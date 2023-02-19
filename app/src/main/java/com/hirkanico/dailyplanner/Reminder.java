@@ -14,6 +14,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.hirkanico.dailyplanner.library.DBManager;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,6 +25,7 @@ public class Reminder extends AppCompatActivity {
     EditText editTaskName;
     EditText editTaskDate;
     EditText editTaskTime;
+    EditText editTaskDuration;
 
     TextView txtShowDate;
 
@@ -46,8 +48,9 @@ public class Reminder extends AppCompatActivity {
         AppCompatButton btnSubmitNewReminder = findViewById(R.id.btnSubmitNewReminder);
 
         editTaskName = findViewById(R.id.editTaskName);
-        editTaskDate = findViewById(R.id.editTaskTime);
-        editTaskTime = findViewById(R.id.editTaskDuration);
+        editTaskDate = findViewById(R.id.editTaskDate);
+        editTaskTime = findViewById(R.id.editTaskTime);
+        editTaskDuration = findViewById(R.id.editTaskDuration);
 
         editTaskTime.setOnClickListener(v -> selectTime());
 
@@ -61,10 +64,11 @@ public class Reminder extends AppCompatActivity {
                 Toast.makeText(Reminder.this, "Date and Time Must be determine", Toast.LENGTH_SHORT).show();
                 return;
             }
-            database.insertNewPlane(editTaskName.getText().toString(), editTaskDate.getText().toString(), editTaskTime.getText().toString(), "-");
+            database.insertNewPlane(editTaskName.getText().toString(), editTaskDate.getText().toString(), editTaskTime.getText().toString(), editTaskDuration.getText().toString(), "-");
             editTaskName.setText("");
             editTaskDate.setText("");
             editTaskTime.setText("");
+            editTaskDuration.setText("");
             Toast.makeText(Reminder.this, "Task added", Toast.LENGTH_SHORT).show();
         });
     }
@@ -97,6 +101,7 @@ public class Reminder extends AppCompatActivity {
 
         // on below line we are getting
         // our day, month and year.
+        DecimalFormat mFormat= new DecimalFormat("00");
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
@@ -110,7 +115,7 @@ public class Reminder extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
                         // on below line we are setting date to our text view.
-                        editTaskDate.setText(new StringBuilder().append(dayOfMonth).append("-").append(monthOfYear + 1).append("-").append(year).toString());
+                        editTaskDate.setText(new StringBuilder().append(year).append("-").append(mFormat.format(monthOfYear + 1)).append("-").append(mFormat.format(dayOfMonth)).toString());
 
                     }
                 },

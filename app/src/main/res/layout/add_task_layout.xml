@@ -32,12 +32,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/task_time"
-        app:layout_constraintBottom_toBottomOf="@+id/editTaskTime"
+        app:layout_constraintBottom_toBottomOf="@+id/editTaskDate"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toTopOf="@+id/editTaskTime" />
+        app:layout_constraintTop_toTopOf="@+id/editTaskDate" />
 
     <EditText
-        android:id="@+id/editTaskTime"
+        android:id="@+id/editTaskDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -55,12 +55,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/task_duration"
-        app:layout_constraintBottom_toBottomOf="@+id/editTaskDuration"
+        app:layout_constraintBottom_toBottomOf="@+id/editTaskTime"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toTopOf="@+id/editTaskDuration" />
+        app:layout_constraintTop_toTopOf="@+id/editTaskTime" />
 
     <EditText
-        android:id="@+id/editTaskDuration"
+        android:id="@+id/editTaskTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -68,8 +68,8 @@
         android:hint="@string/task_duration"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        app:layout_constraintStart_toStartOf="@+id/editTaskTime"
-        app:layout_constraintTop_toBottomOf="@+id/editTaskTime" />
+        app:layout_constraintStart_toStartOf="@+id/editTaskDate"
+        app:layout_constraintTop_toBottomOf="@+id/editTaskDate" />
 
     <CheckBox
         android:id="@+id/chkMonday"
@@ -77,8 +77,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/monday"
-        app:layout_constraintStart_toStartOf="@+id/editTaskDuration"
-        app:layout_constraintTop_toBottomOf="@+id/editTaskDuration" />
+        app:layout_constraintStart_toStartOf="@+id/editTaskTime"
+        app:layout_constraintTop_toBottomOf="@+id/editTaskTime" />
 
     <CheckBox
         android:id="@+id/chkTuesday"

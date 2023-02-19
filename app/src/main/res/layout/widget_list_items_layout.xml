@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widget_list_items_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgTickIcon"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/tick_icon_red"
+        android:contentDescription="TODO"
+        android:src="@drawable/tick_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/tick_icon_red" />
+
+    <TextView
+        android:id="@+id/txtWidgetPlanName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imgTickIcon"
+        android:layout_alignBottom="@+id/imgTickIcon"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="3dp"
+        android:layout_toEndOf="@+id/imgTickIcon"
+        android:text="TextView"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/imgTickIcon"
+        app:layout_constraintStart_toEndOf="@+id/imgTickIcon"
+        app:layout_constraintTop_toTopOf="@+id/imgTickIcon" />
+
+    <TextView
+        android:id="@+id/txtWidgetPlanTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/txtWidgetPlanName"
+        android:layout_alignBottom="@+id/txtWidgetPlanName"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toEndOf="@+id/txtWidgetPlanName"
+        android:gravity="center"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/txtWidgetPlanName"
+        app:layout_constraintTop_toTopOf="@+id/txtWidgetPlanName" />
+
+    <TextView
+        android:id="@+id/txtWidgetPlanDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/txtWidgetPlanTime"
+        android:layout_alignBottom="@+id/txtWidgetPlanTime"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toEndOf="@+id/txtWidgetPlanTime"
+        android:gravity="center"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/txtWidgetPlanTime"
+        app:layout_constraintTop_toTopOf="@+id/txtWidgetPlanTime" />
+
+</RelativeLayout>

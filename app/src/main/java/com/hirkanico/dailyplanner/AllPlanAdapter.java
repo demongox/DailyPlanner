@@ -14,7 +14,8 @@ import com.hirkanico.dailyplanner.classes.ClickListener;
 import com.hirkanico.dailyplanner.classes.DailyTask;
 
 import java.util.ArrayList;
-public class DailyPlannerAdapter extends RecyclerView.Adapter<DailyPlannerHolder> {
+
+public class AllPlanAdapter extends RecyclerView.Adapter<AllPlanHolder> {
 
     int rowIndex = -1;
 
@@ -22,7 +23,7 @@ public class DailyPlannerAdapter extends RecyclerView.Adapter<DailyPlannerHolder
     ClickListener listener;
     Context context;
 
-    public DailyPlannerAdapter(Context context, ArrayList<DailyTask> taskNameList, ClickListener listener) {
+    public AllPlanAdapter(Context context, ArrayList<DailyTask> taskNameList, ClickListener listener) {
 
         this.taskNameList = taskNameList;
         this.context = context;
@@ -31,19 +32,19 @@ public class DailyPlannerAdapter extends RecyclerView.Adapter<DailyPlannerHolder
 
     @NonNull
     @Override
-    public DailyPlannerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AllPlanHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the layout
 
-        View taskView = inflater.inflate(R.layout.view_daily_plan_recycle_view, parent, false);
+        View taskView = inflater.inflate(R.layout.view_all_plan_recycle_view, parent, false);
 
-        return new DailyPlannerHolder(taskView);
+        return new AllPlanHolder(taskView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DailyPlannerHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull AllPlanHolder holder, @SuppressLint("RecyclerView") int position) {
         final int index = holder.getAdapterPosition();
 /*
         Log.v("taskName",taskNameList.get(position).taskName);

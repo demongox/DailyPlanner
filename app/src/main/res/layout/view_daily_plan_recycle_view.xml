@@ -6,40 +6,38 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <CheckBox
-        android:id="@+id/checkBoxDone"
+    <ImageView
+        android:id="@+id/imgIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/ic_launcher_foreground"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtPlanTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/checkBoxDone"
-        app:layout_constraintEnd_toStartOf="@+id/checkBoxDone"
-        app:layout_constraintTop_toTopOf="@+id/checkBoxDone" />
-
-    <TextView
-        android:id="@+id/txtPlanDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/txtPlanTitle"
-        app:layout_constraintTop_toTopOf="@+id/txtPlanTitle" />
+        app:layout_constraintBottom_toBottomOf="@+id/imgIcon"
+        app:layout_constraintStart_toEndOf="@+id/imgIcon"
+        app:layout_constraintTop_toTopOf="@+id/imgIcon" />
 
     <TextView
         android:id="@+id/txtPlanTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
         android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/txtPlanDate"
-        app:layout_constraintTop_toTopOf="@+id/txtPlanDate" />
+        app:layout_constraintStart_toEndOf="@+id/txtPlanTitle"
+        app:layout_constraintTop_toTopOf="@+id/txtPlanTitle" />
+
+    <TextView
+        android:id="@+id/txtPlanDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/txtPlanTime"
+        app:layout_constraintTop_toTopOf="@+id/txtPlanTime" />
 </androidx.constraintlayout.widget.ConstraintLayout>

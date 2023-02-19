@@ -5,31 +5,27 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.hirkanico.dailyplanner.classes.ClickListener;
 import com.hirkanico.dailyplanner.classes.DailyTask;
 import com.hirkanico.dailyplanner.library.DBManager;
 
+
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,9 +33,21 @@ public class MainActivity extends AppCompatActivity {
     ImageButton btnReminder;
     ImageButton btnSearch;
 
+    AppCompatButton btnShowAllTasks;
+
+    private static Context mContext;
+
     DBManager database;
 
     ClickListener listener;
+
+    ArrayList<DailyTask> todayTask;
+    RecyclerView recyclerView;
+
+    ExecutorService executor = Executors.newSingleThreadExecutor();
+    ExecutorService executorService =
+            new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS,
+                    new LinkedBlockingQueue<Runnable>());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +58,15 @@ public class MainActivity extends AppCompatActivity {
         btnReminder = findViewById(R.id.btnReminder);
         btnSearch = findViewById(R.id.btnSearch);
 
-        Calendar date = Calendar.getInstance();
-        String dayToday = android.text.format.DateFormat.format("EEEE", date).toString();
+        btnShowAllTasks = findViewById(R.id.btnShowAllTasks);
+
+        mContext  = MainActivity.this;
+
+       //String dayToday = android.text.format.DateFormat.format("EEEE", date).toString();
 
 
-        Log.v("Day name", dayToday);
-        Log.v("Day name number", String.valueOf(date.get(Calendar.DAY_OF_WEEK)-1));
+        //og.v("Day name", dayToday);
+        //Log.v("Day name number", String.valueOf(date.get(Calendar.DAY_OF_WEEK)-1));
 /*
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             DayOfWeek dow = DayOfWeek.of(1);
@@ -84,21 +95,66 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        btnShowAllTasks.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, ShowAllTasks.class);
+            startActivity(intent);
+        });
+
         database = new DBManager(MainActivity.this);
         database.open();
 
         listener = index -> {
-            Toast.makeText(MainActivity.this,"clicked item index is "+index,Toast.LENGTH_LONG).show();
-            Log.v("","");
+            //Toast.makeText(MainActivity.this,"clicked item index is "+index,Toast.LENGTH_LONG).show();
+            String doneTaskId = todayTask.get(index).id;
+            database.updateDailyPlane(doneTaskId);
+            fillTodayLists();
         };
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.showTodayTasks);
+        fillTodayLists();
+    }
 
-        ArrayList<DailyTask> allTodayTask = database.fetchDailyPlan();
-        DailyPlannerAdapter adapter = new DailyPlannerAdapter(MainActivity.this, allTodayTask, listener);
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        fillTodayLists();
+    }
+
+    private void fillTodayLists(){
+
+        Calendar date = Calendar.getInstance();
+
+        String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        Log.v("today", today);
+        String todayNumber = String.valueOf(date.get(Calendar.DAY_OF_WEEK));
+        Log.v("today", todayNumber);
+
+        ArrayList<DailyTask> allTodayTask = database.searchByAllDayRepeat(todayNumber,today);
+        ArrayList<String> allInsertedTask = database.getAllTodayInsertedTasks(today);
+
+        for (int i = 0; i < allInsertedTask.size(); i++) {
+            for (int j = 0; j < allTodayTask.size(); j++) {
+                if (allInsertedTask.get(i).equals(allTodayTask.get(j).id)) {
+                    allTodayTask.remove(j);
+                    Log.e("array 2 ", allTodayTask.toString());
+                    j = -1;
+                }
+            }
+        }
+
+        for (DailyTask allTask: allTodayTask) {
+            database.insertDailyPlane(allTask.taskName, today, allTask.taskTime,allTask.planDuration);
+            //todayTask.add(new DailyTask(allTask.id, allTask.taskName, today, allTask.taskTime, allTask.planDuration, "false"));
+        }
+
+        todayTask = database.fetchDailyPlan(today);
+
+        recyclerView = (RecyclerView) findViewById(R.id.showTodayTasks);
+
+        //ArrayList<DailyTask> allTodayTask = database.fetchDailyPlan();
+
+        DailyPlannerAdapter adapter = new DailyPlannerAdapter(MainActivity.this, todayTask, listener);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         recyclerView.setAdapter(adapter);
-
     }
 }

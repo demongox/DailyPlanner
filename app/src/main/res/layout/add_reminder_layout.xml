@@ -34,12 +34,12 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/task_date"
-        app:layout_constraintBottom_toBottomOf="@+id/editTaskTime"
-        app:layout_constraintEnd_toStartOf="@+id/editTaskTime"
-        app:layout_constraintTop_toTopOf="@+id/editTaskTime" />
+        app:layout_constraintBottom_toBottomOf="@+id/editTaskDate"
+        app:layout_constraintEnd_toStartOf="@+id/editTaskDate"
+        app:layout_constraintTop_toTopOf="@+id/editTaskDate" />
 
     <EditText
-        android:id="@+id/editTaskTime"
+        android:id="@+id/editTaskDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -58,12 +58,22 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/task_time"
+        app:layout_constraintBottom_toBottomOf="@+id/editTaskTime"
+        app:layout_constraintEnd_toStartOf="@+id/editTaskTime"
+        app:layout_constraintTop_toTopOf="@+id/editTaskTime" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/task_duration"
         app:layout_constraintBottom_toBottomOf="@+id/editTaskDuration"
         app:layout_constraintEnd_toStartOf="@+id/editTaskDuration"
         app:layout_constraintTop_toTopOf="@+id/editTaskDuration" />
 
     <EditText
-        android:id="@+id/editTaskDuration"
+        android:id="@+id/editTaskTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -72,14 +82,26 @@
         android:hint="@string/task_time"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        app:layout_constraintStart_toStartOf="@+id/editTaskTime"
+        app:layout_constraintStart_toStartOf="@+id/editTaskDate"
+        app:layout_constraintTop_toBottomOf="@+id/editTaskDate" />
+
+    <EditText
+        android:id="@+id/editTaskDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/task_duration"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toStartOf="@+id/editTaskDate"
         app:layout_constraintTop_toBottomOf="@+id/editTaskTime" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSubmitNewReminder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="@string/add_reminder"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline4"

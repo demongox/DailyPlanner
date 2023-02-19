@@ -66,8 +66,8 @@ public class AddDailyTask extends AppCompatActivity {
         AppCompatButton btnSubmitNewReminder = findViewById(R.id.btnSubmitNewReminder);
 
         editTaskName = findViewById(R.id.editTaskName);
-        editTaskTime = findViewById(R.id.editTaskTime);
-        editTaskDuration = findViewById(R.id.editTaskDuration);
+        editTaskTime = findViewById(R.id.editTaskDate);
+        editTaskDuration = findViewById(R.id.editTaskTime);
 
        //editTaskDuration.setOnClickListener(v -> selectTime());
 
@@ -84,7 +84,7 @@ public class AddDailyTask extends AppCompatActivity {
 
             checkDaySequence();
 
-            database.insertNewPlane(editTaskName.getText().toString(), editTaskTime.getText().toString(), editTaskDuration.getText().toString(), daySequence);
+            database.insertNewPlane(editTaskName.getText().toString(), "-", editTaskTime.getText().toString(), editTaskDuration.getText().toString(), daySequence);
             editTaskName.setText("");
             editTaskTime.setText("");
             editTaskDuration.setText("");
@@ -114,7 +114,7 @@ public class AddDailyTask extends AppCompatActivity {
                                           int minute) {
                         // on below line we are setting selected time
                         // in our text view.
-                        editTaskDuration.setText(new StringBuilder().append(hourOfDay).append(":").append(minute).toString());
+                        editTaskTime.setText(new StringBuilder().append(hourOfDay).append(":").append(minute).toString());
                     }
                 }, hour, minute, false);
         // at last we are calling show to
