@@ -2,6 +2,7 @@ package com.hirkanico.dailyplanner;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,7 +18,7 @@ public class AllPlanHolder extends RecyclerView.ViewHolder {
     public TextView taskDate;
     public TextView taskTime;
     public TextView txtPlanDuration;
-    public ConstraintLayout mainLayout;
+    public RelativeLayout mainLayout;
     View view;
 
     public AllPlanHolder(@NonNull View itemView) {
@@ -29,7 +30,7 @@ public class AllPlanHolder extends RecyclerView.ViewHolder {
         taskDate = (TextView) itemView.findViewById(R.id.txtPlanDate);
         taskTime = (TextView) itemView.findViewById(R.id.txtPlanTime);
         txtPlanDuration = (TextView) itemView.findViewById(R.id.txtPlanDuration);
-        mainLayout = (ConstraintLayout) itemView.findViewById(R.id.planRowLayout);
+        mainLayout = (RelativeLayout) itemView.findViewById(R.id.allPlanRowLayout);
         view = itemView;
 
     }

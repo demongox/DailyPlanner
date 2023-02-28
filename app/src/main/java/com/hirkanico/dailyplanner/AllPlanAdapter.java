@@ -63,6 +63,11 @@ public class AllPlanAdapter extends RecyclerView.Adapter<AllPlanHolder> {
             rowIndex = position;
             listener.click(index, "edit");
         });
+
+        if (position%2 == 0)
+            holder.mainLayout.setBackgroundColor(Color.parseColor("#d5dbdb"));
+        else
+            holder.mainLayout.setBackgroundColor(Color.parseColor("#cacfd2"));
 /*
         if(rowIndex == position)
             holder.mainLayout.setBackgroundColor(Color.parseColor("#D6EEEE"));
