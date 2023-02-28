@@ -9,8 +9,9 @@ public class DailyTask {
     public String planDuration;
     public String planRepeat;
     public String isDone;
+    public String planPriority;
 
-    public DailyTask(String id, String taskName, String taskDate, String taskTime, String isDone, String planDuration)
+    public DailyTask(String id, String taskName, String taskDate, String taskTime, String isDone, String planDuration, String planPriority)
     {
         this.id = id;
         this.taskName = taskName;
@@ -18,9 +19,10 @@ public class DailyTask {
         this.taskTime = taskTime;
         this.planDuration = planDuration;
         this.isDone = isDone;
+        this.planPriority = planPriority;
     }
 
-    public DailyTask(String id, String taskName, String taskDate, String taskTime, String isDone, String planDuration, String planRepeat)
+    public DailyTask(String id, String taskName, String taskDate, String taskTime, String isDone, String planDuration, String planRepeat, String planPriority)
     {
         this.id = id;
         this.taskName = taskName;
@@ -29,6 +31,7 @@ public class DailyTask {
         this.planDuration = planDuration;
         this.planRepeat = planRepeat;
         this.isDone = isDone;
+        this.planPriority = planPriority;
     }
 
 }

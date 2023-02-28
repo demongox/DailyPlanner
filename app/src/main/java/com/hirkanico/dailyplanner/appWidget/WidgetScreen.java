@@ -1,24 +1,17 @@
 package com.hirkanico.dailyplanner.appWidget;
 
-import android.annotation.TargetApi;
 import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.os.Build;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.annotation.NonNull;
 
 import com.hirkanico.dailyplanner.MainActivity;
 import com.hirkanico.dailyplanner.R;
-
-import java.util.Random;
 
 /**
  * Implementation of App Widget functionality.
@@ -32,10 +25,7 @@ public class WidgetScreen extends AppWidgetProvider {
         // Instruct the widget manager to update the widget
         setRemoteAdapter(context, views);
 
-        //Log.v("Number 1", "Executed");
-
-        String number = String.format("%03d", (new Random().nextInt(900) + 100));
-        views.setTextViewText(R.id.textView6, number);
+        views.setTextViewText(R.id.txtWidgetTitle, "Daily Tasks");
 
         /** PendingIntent to launch the MainActivity when the widget was clicked **/
         Intent launchMain  = new Intent(context, MainActivity.class);
@@ -45,7 +35,18 @@ public class WidgetScreen extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidgetId, views);
 
     }
+/*
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
+        int[] appWidgetIds = widgetManager.getAppWidgetIds(new ComponentName(context.getApplicationContext(), WidgetScreen.class));
 
+        Intent updateIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE, null, context.getApplicationContext(), WidgetScreen.class);
+        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+
+        context.sendBroadcast(updateIntent);
+    }
+*/
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
@@ -69,7 +70,6 @@ public class WidgetScreen extends AppWidgetProvider {
 
     private static void setRemoteAdapter(Context context, @NonNull final RemoteViews views) {
 
-        //Log.v("Number 2", "Executed");
         views.setRemoteAdapter(R.id.widget_listView,
                 new Intent(context, WidgetService.class));
     }

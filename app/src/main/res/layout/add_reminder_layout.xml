@@ -9,14 +9,13 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:text="@string/task_name"
-        app:layout_constraintBottom_toBottomOf="@+id/editTaskName"
-        app:layout_constraintEnd_toStartOf="@+id/editTaskName"
-        app:layout_constraintTop_toTopOf="@+id/editTaskName" />
+        app:layout_constraintBottom_toBottomOf="@+id/editReminderTaskName"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/editReminderTaskName" />
 
     <EditText
-        android:id="@+id/editTaskName"
+        android:id="@+id/editReminderTaskName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -32,14 +31,13 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:text="@string/task_date"
-        app:layout_constraintBottom_toBottomOf="@+id/editTaskDate"
-        app:layout_constraintEnd_toStartOf="@+id/editTaskDate"
-        app:layout_constraintTop_toTopOf="@+id/editTaskDate" />
+        app:layout_constraintBottom_toBottomOf="@+id/editReminderTaskDate"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/editReminderTaskDate" />
 
     <EditText
-        android:id="@+id/editTaskDate"
+        android:id="@+id/editReminderTaskDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -49,31 +47,29 @@
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:onClick="selectDate"
-        app:layout_constraintStart_toStartOf="@+id/editTaskName"
-        app:layout_constraintTop_toBottomOf="@+id/editTaskName" />
+        app:layout_constraintStart_toStartOf="@+id/editReminderTaskName"
+        app:layout_constraintTop_toBottomOf="@+id/editReminderTaskName" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:text="@string/task_time"
-        app:layout_constraintBottom_toBottomOf="@+id/editTaskTime"
-        app:layout_constraintEnd_toStartOf="@+id/editTaskTime"
-        app:layout_constraintTop_toTopOf="@+id/editTaskTime" />
+        app:layout_constraintBottom_toBottomOf="@+id/editReminderTaskTime"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/editReminderTaskTime" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:text="@string/task_duration"
-        app:layout_constraintBottom_toBottomOf="@+id/editTaskDuration"
-        app:layout_constraintEnd_toStartOf="@+id/editTaskDuration"
-        app:layout_constraintTop_toTopOf="@+id/editTaskDuration" />
+        app:layout_constraintBottom_toBottomOf="@+id/editReminderTaskDuration"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/editReminderTaskDuration" />
 
     <EditText
-        android:id="@+id/editTaskTime"
+        android:id="@+id/editReminderTaskTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -82,11 +78,11 @@
         android:hint="@string/task_time"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        app:layout_constraintStart_toStartOf="@+id/editTaskDate"
-        app:layout_constraintTop_toBottomOf="@+id/editTaskDate" />
+        app:layout_constraintStart_toStartOf="@+id/editReminderTaskDate"
+        app:layout_constraintTop_toBottomOf="@+id/editReminderTaskDate" />
 
     <EditText
-        android:id="@+id/editTaskDuration"
+        android:id="@+id/editReminderTaskDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -94,18 +90,58 @@
         android:hint="@string/task_duration"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        app:layout_constraintStart_toStartOf="@+id/editTaskDate"
-        app:layout_constraintTop_toBottomOf="@+id/editTaskTime" />
+        app:layout_constraintStart_toStartOf="@+id/editReminderTaskDate"
+        app:layout_constraintTop_toBottomOf="@+id/editReminderTaskTime" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSubmitNewReminder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:text="@string/add_reminder"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@+id/editTaskDuration" />
+        app:layout_constraintTop_toBottomOf="@+id/priorityRadioGroup" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/task_priority"
+        app:layout_constraintBottom_toBottomOf="@+id/priorityRadioGroup"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/priorityRadioGroup" />
+
+    <RadioGroup
+        android:id="@+id/priorityRadioGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation='horizontal'
+        app:layout_constraintEnd_toEndOf="@+id/editReminderTaskDuration"
+        app:layout_constraintStart_toStartOf="@+id/editReminderTaskDuration"
+        app:layout_constraintTop_toBottomOf="@+id/editReminderTaskDuration">
+
+        <RadioButton
+            android:id="@+id/chkReminderLow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/low" />
+
+        <RadioButton
+            android:id="@+id/chkReminderMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/medium" />
+
+        <RadioButton
+            android:id="@+id/chkReminderHigh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/high" />
+
+    </RadioGroup>
 
     <TextView
         android:id="@+id/txtShowDate"
@@ -121,31 +157,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:background="@null"
+        android:contentDescription="@string/add_new_task"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add"
-        android:background="@null"/>
+        app:srcCompat="@android:drawable/ic_input_add" />
 
     <ImageButton
         android:id="@+id/btnSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@null"
+        android:contentDescription="@string/search"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toStartOf="@+id/btnAddTask"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btnAddTask"
-        app:srcCompat="@android:drawable/ic_menu_search"
-        android:background="@null"/>
+        app:srcCompat="@android:drawable/ic_menu_search" />
 
     <ImageButton
         android:id="@+id/btnReminder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@null"
+        android:contentDescription="@string/add_reminder"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnAddTask"
         app:layout_constraintTop_toTopOf="@+id/btnAddTask"
-        app:srcCompat="@android:drawable/ic_popup_reminder"
-        android:background="@null"/>
+        app:srcCompat="@android:drawable/ic_popup_reminder" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"

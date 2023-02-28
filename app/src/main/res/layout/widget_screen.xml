@@ -9,12 +9,14 @@
         android:id="@+id/widget_listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="0dp"/>
+        android:layout_below="@+id/txtWidgetTitle"
+        android:layout_marginTop="4dp" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/txtWidgetTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:text="TextView" />
 
 </RelativeLayout>

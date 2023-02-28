@@ -15,6 +15,7 @@ public class DailyPlannerHolder extends RecyclerView.ViewHolder {
     //public TextView taskDate;
     public TextView taskTime;
     public TextView txtPlanDuration;
+    public ImageView imgPlanPriority;
     public ConstraintLayout mainLayout;
     View view;
 
@@ -25,6 +26,7 @@ public class DailyPlannerHolder extends RecyclerView.ViewHolder {
         //taskDate = (TextView) itemView.findViewById(R.id.txtPlanDate);
         taskTime = (TextView) itemView.findViewById(R.id.txtPlanTime);
         txtPlanDuration = (TextView) itemView.findViewById(R.id.txtPlanDuration);
+        imgPlanPriority = (ImageView) itemView.findViewById(R.id.imgPlanPriority);
         mainLayout = (ConstraintLayout) itemView.findViewById(R.id.planRowLayout);
         view = itemView;
 

@@ -5,12 +5,16 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
+import com.hirkanico.dailyplanner.appWidget.WidgetScreen;
 import com.hirkanico.dailyplanner.classes.ClickListener;
 import com.hirkanico.dailyplanner.classes.DailyTask;
 import com.hirkanico.dailyplanner.library.DBManager;
@@ -44,11 +48,6 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<DailyTask> todayTask;
     RecyclerView recyclerView;
 
-    ExecutorService executor = Executors.newSingleThreadExecutor();
-    ExecutorService executorService =
-            new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS,
-                    new LinkedBlockingQueue<Runnable>());
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
         btnShowAllTasks = findViewById(R.id.btnShowAllTasks);
 
         mContext  = MainActivity.this;
+
+        TextView txtShowDate = findViewById(R.id.txtShowDate);
+        txtShowDate.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
 
        //String dayToday = android.text.format.DateFormat.format("EEEE", date).toString();
 
@@ -124,9 +126,9 @@ public class MainActivity extends AppCompatActivity {
         Calendar date = Calendar.getInstance();
 
         String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-        Log.v("today", today);
-        String todayNumber = String.valueOf(date.get(Calendar.DAY_OF_WEEK));
-        Log.v("today", todayNumber);
+        //Log.v("today", today);
+        String todayNumber = String.valueOf(date.get(Calendar.DAY_OF_WEEK)-1);
+        //Log.v("today", todayNumber);
 
         ArrayList<DailyTask> allTodayTask = database.searchByAllDayRepeat(todayNumber,today);
         ArrayList<String> allInsertedTask = database.getAllTodayInsertedTasks(today);
@@ -135,14 +137,14 @@ public class MainActivity extends AppCompatActivity {
             for (int j = 0; j < allTodayTask.size(); j++) {
                 if (allInsertedTask.get(i).equals(allTodayTask.get(j).id)) {
                     allTodayTask.remove(j);
-                    Log.e("array 2 ", allTodayTask.toString());
+                    //Log.e("array 2 ", allTodayTask.toString());
                     j = -1;
                 }
             }
         }
 
         for (DailyTask allTask: allTodayTask) {
-            database.insertDailyPlane(allTask.taskName, today, allTask.taskTime,allTask.planDuration);
+            database.insertDailyPlane(allTask.id, today, allTask.taskTime,allTask.planDuration, allTask.planPriority);
             //todayTask.add(new DailyTask(allTask.id, allTask.taskName, today, allTask.taskTime, allTask.planDuration, "false"));
         }
 
@@ -156,5 +158,13 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         recyclerView.setAdapter(adapter);
+
+        Intent intent = new Intent(this, WidgetScreen.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
+        // since it seems the onUpdate() is only fired on that:
+        int[] ids = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), WidgetScreen.class));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        sendBroadcast(intent);
     }
 }

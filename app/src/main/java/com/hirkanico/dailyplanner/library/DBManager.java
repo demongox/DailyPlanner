@@ -35,7 +35,7 @@ public class DBManager {
         dbHelper.close();
     }
 
-    public void insertNewPlane(String planTitle, String planDate, String planTime, String planDuration, String dailyRepeat) {
+    public void insertNewPlane(String planTitle, String planDate, String planTime, String planDuration, String dailyRepeat, String priority) {
         ContentValues contentValue = new ContentValues();
 
         contentValue.put(DatabaseHelper.PLAN_TITLE, planTitle);
@@ -43,11 +43,12 @@ public class DBManager {
         contentValue.put(DatabaseHelper.NEW_PLAN_DOING_TIME, planTime);
         contentValue.put(DatabaseHelper.NEW_PLAN_DURATION_TIME, planDuration);
         contentValue.put(DatabaseHelper.PLAN_REPEAT_DAY, dailyRepeat);
+        contentValue.put(DatabaseHelper.PLAN_PRIORITY, priority);
 
         database.insert(DatabaseHelper.ALL_PLAN_TABLE_NAME, null, contentValue);
     }
 
-    public void insertDailyPlane(String planId, String planDate, String planTime, String planDuration) {
+    public void insertDailyPlane(String planId, String planDate, String planTime, String planDuration, String planPriority) {
         ContentValues contentValue = new ContentValues();
 
         contentValue.put(DatabaseHelper.DAILY_PLAN_ID, planId);
@@ -55,29 +56,30 @@ public class DBManager {
         contentValue.put(DatabaseHelper.PLAN_TIME, planTime);
         contentValue.put(DatabaseHelper.NEW_PLAN_DURATION_TIME, planDuration);
         contentValue.put(DatabaseHelper.PLAN_IS_DONE, "false");
+        contentValue.put(DatabaseHelper.PLAN_PRIORITY, planPriority);
 
         database.insert(DatabaseHelper.DAILY_PLANNER_TABLE_NAME, null, contentValue);
     }
 
-    public ArrayList<DailyTask> fetchAllPlan(String today) {
-        String MY_QUERY = "SELECT * FROM " + DatabaseHelper.ALL_PLAN_TABLE_NAME +
-                " WHERE " + DatabaseHelper.PLAN_DATE +
-                " = '-' OR " + DatabaseHelper.PLAN_DATE + " >= '"+today+"'";
+    @SuppressLint("Range")
+    public ArrayList<DailyTask> fetchAllPlan() {
+        String MY_QUERY = "SELECT * FROM " + DatabaseHelper.ALL_PLAN_TABLE_NAME;
 
         Cursor cursor = database.rawQuery(MY_QUERY,new String[]{});
 
         ArrayList<DailyTask> allDailyTask = new ArrayList<>();
 
         while(cursor.moveToNext()){
-            //Log.v("Id" , cursor.getString(cursor.getColumnIndex(DatabaseHelper.ID)));
+            Log.v("Id" , cursor.getString(cursor.getColumnIndex(DatabaseHelper.ID)));
             @SuppressLint("Range") String id = cursor.getString(cursor.getColumnIndex(DatabaseHelper.ID));
             @SuppressLint("Range") String plan_title =  cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_TITLE));
             @SuppressLint("Range") String date =  cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_DATE));
             @SuppressLint("Range") String time =  cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_TIME));
             @SuppressLint("Range") String repeat =  cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_REPEAT_DAY));
             @SuppressLint("Range") String duration =  cursor.getString(cursor.getColumnIndex(DatabaseHelper.NEW_PLAN_DURATION_TIME));
+            @SuppressLint("Range") String priority =  cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_PRIORITY));
 
-            allDailyTask.add(new DailyTask(id, plan_title, date, time, "-", duration, repeat));
+            allDailyTask.add(new DailyTask(id, plan_title, date, time, "-", duration, repeat, priority));
         }
 
         return allDailyTask;
@@ -85,7 +87,7 @@ public class DBManager {
 
     public Cursor fetchDailyPlanForWidget(String today) {
 
-        String MY_QUERY = "SELECT a.id, a.plan_id,a.plan_date, a.plan_time, a.plan_duration,a.plan_is_done, b.plan_title FROM " + DatabaseHelper.DAILY_PLANNER_TABLE_NAME +
+        String MY_QUERY = "SELECT a.id, a.plan_id,a.plan_date, a.plan_time, a.plan_duration,a.plan_is_done,a.plan_priority, b.plan_title FROM " + DatabaseHelper.DAILY_PLANNER_TABLE_NAME +
                 " a Left JOIN " + DatabaseHelper.ALL_PLAN_TABLE_NAME +
                 " b ON a.plan_id=b.id WHERE a." + DatabaseHelper.PLAN_IS_DONE + " = 'false' AND a." +
                 DatabaseHelper.PLAN_DATE + " = '" + today + "' OR a." + DatabaseHelper.PLAN_DATE + " = '-'";
@@ -116,9 +118,10 @@ public class DBManager {
             @SuppressLint("Range") String date =  cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_DATE));
             @SuppressLint("Range") String time =  cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_TIME));
             @SuppressLint("Range") String duration =  cursor.getString(cursor.getColumnIndex(DatabaseHelper.NEW_PLAN_DURATION_TIME));
+            @SuppressLint("Range") String priority =  cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_PRIORITY));
             //@SuppressLint("Range") String isDone =  cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_IS_DONE));
 
-            allDailyTask.add(new DailyTask(id, plan_title, date, time, "-", duration));
+            allDailyTask.add(new DailyTask(id, plan_title, date, time, "-", duration, priority));
         }
 
         return allDailyTask;
@@ -128,9 +131,10 @@ public class DBManager {
         String[] columns = new String[]{DatabaseHelper.ID, DatabaseHelper.DAILY_PLAN_ID, DatabaseHelper.PLAN_DATE, DatabaseHelper.PLAN_TIME, DatabaseHelper.PLAN_IS_DONE};
         //Cursor cursor = database.query(DatabaseHelper.DAILY_PLANNER_TABLE_NAME, columns, null, null, null, null, null);
 
-        String MY_QUERY = "SELECT a.id, a.plan_id,a.plan_date, a.plan_time, a.plan_duration,a.plan_is_done, b.plan_title FROM " + DatabaseHelper.DAILY_PLANNER_TABLE_NAME +
+        String MY_QUERY = "SELECT a.id, a.plan_id,a.plan_date, a.plan_time, a.plan_duration,a.plan_is_done, a.plan_priority, b.plan_title FROM " + DatabaseHelper.DAILY_PLANNER_TABLE_NAME +
                 " a Left JOIN " + DatabaseHelper.ALL_PLAN_TABLE_NAME +
-                " b ON a.plan_id=b.id WHERE a." + DatabaseHelper.PLAN_IS_DONE + " = 'false' AND a." +
+                " b ON a.plan_id=b.id WHERE a." +
+                //" b ON a.plan_id=b.id WHERE a." + DatabaseHelper.PLAN_IS_DONE + " = 'false' AND a." +
                 DatabaseHelper.PLAN_DATE + " = '" + today + "' OR a." + DatabaseHelper.PLAN_DATE + " = '-'";
 
         Cursor cursor = database.rawQuery(MY_QUERY,new String[]{});
@@ -141,13 +145,14 @@ public class DBManager {
 
         while (cursor.moveToNext()) {
             @SuppressLint("Range") String id = cursor.getString(cursor.getColumnIndex(DatabaseHelper.ID));
-            @SuppressLint("Range") String plan_title =  cursor.getString(cursor.getColumnIndex(DatabaseHelper.DAILY_PLAN_ID));
+            @SuppressLint("Range") String plan_title =  cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_TITLE));
             @SuppressLint("Range") String date =  cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_DATE));
             @SuppressLint("Range") String time =  cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_TIME));
             @SuppressLint("Range") String duration =  cursor.getString(cursor.getColumnIndex(DatabaseHelper.NEW_PLAN_DURATION_TIME));
             @SuppressLint("Range") String isDone =  cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_IS_DONE));
+            @SuppressLint("Range") String priority =  cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_PRIORITY));
 
-            allDailyTask.add(new DailyTask(id, plan_title, date, time, duration, isDone));
+            allDailyTask.add(new DailyTask(id, plan_title, date, time, isDone, duration, priority));
         }
 
         return allDailyTask;
@@ -168,16 +173,44 @@ public class DBManager {
             allInsertedId.add(cursor.getString(cursor.getColumnIndex(DatabaseHelper.DAILY_PLAN_ID)));
         }
 
+        //database.close();
+
         return allInsertedId;
     }
 
-    public int updateAllPlane(long _id, String title, String date, String time, String repeat) {
+    public DailyTask getSingleTask(String _id){
+        String MY_QUERY = "SELECT * FROM " + DatabaseHelper.ALL_PLAN_TABLE_NAME +
+                " WHERE " + DatabaseHelper.ID + " = '" + _id + "'";
+
+        DailyTask allDailyTask = null;
+        try (Cursor cursor = database.rawQuery(MY_QUERY, new String[]{})) {
+            while (cursor.moveToNext()) {
+                //Log.v("Id" , cursor.getString(cursor.getColumnIndex(DatabaseHelper.ID)));
+                @SuppressLint("Range") String id = cursor.getString(cursor.getColumnIndex(DatabaseHelper.ID));
+                @SuppressLint("Range") String plan_title = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_TITLE));
+                @SuppressLint("Range") String date = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_DATE));
+                @SuppressLint("Range") String time = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_TIME));
+                @SuppressLint("Range") String repeat = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_REPEAT_DAY));
+                @SuppressLint("Range") String duration = cursor.getString(cursor.getColumnIndex(DatabaseHelper.NEW_PLAN_DURATION_TIME));
+                @SuppressLint("Range") String priority = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_PRIORITY));
+
+                allDailyTask = new DailyTask(id, plan_title, date, time, "-", duration, repeat, priority);
+            }
+        }
+
+        //database.close();
+
+        return allDailyTask;
+    }
+
+    public int updateAllPlane(String _id, String title, String date, String time, String repeat, String priority) {
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(DatabaseHelper.PLAN_TITLE, title);
         contentValues.put(DatabaseHelper.NEW_PLAN_DOING_DATE, date);
         contentValues.put(DatabaseHelper.NEW_PLAN_DOING_TIME, time);
         contentValues.put(DatabaseHelper.PLAN_REPEAT_DAY, repeat);
+        contentValues.put(DatabaseHelper.PLAN_PRIORITY, priority);
 
         int i = database.update(DatabaseHelper.ALL_PLAN_TABLE_NAME, contentValues, DatabaseHelper.ID + " = " + _id, null);
         return i;
@@ -192,12 +225,12 @@ public class DBManager {
         return i;
     }
 
-    public void deleteAllPlane(long _id) {
+    public void deleteFromAllPlaneTable(String _id) {
         database.delete(DatabaseHelper.ALL_PLAN_TABLE_NAME, DatabaseHelper.ID + "=" + _id, null);
     }
 
-    public void deleteDailyPlane(long _id) {
-        database.delete(DatabaseHelper.DAILY_PLANNER_TABLE_NAME, DatabaseHelper.ID + "=" + _id, null);
+    public void deleteDailyPlaneWithAllPlanId(String _id) {
+        database.delete(DatabaseHelper.DAILY_PLANNER_TABLE_NAME, DatabaseHelper.DAILY_PLAN_ID + "='" + _id +"'", null);
     }
 
 }

@@ -47,26 +47,15 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
          when compared to the current app and hence the app's data won't be accessible to it
          because I'm using a content provided *
          */
-        //Log.v("Cursor22222222 ",cursor.toString());
         DBManager database = new DBManager(context);
         database.open();
         cursor = database.fetchDailyPlanForWidget(today);
-        Log.v("Cursor ",cursor.toString());
-        /*
-        cursor = context.getContentResolver().query(StaticConsts.DAILY_PLANNER_URI,
-                new String[]{DatabaseHelper.ID, DatabaseHelper.DAILY_PLAN_ID, DatabaseHelper.PLAN_DATE,
-                        DatabaseHelper.PLAN_TIME, DatabaseHelper.PLAN_IS_DONE},
-                "(" + DatabaseHelper.PLAN_DATE +"= ? AND " + DatabaseHelper.PLAN_IS_DONE +
-                        " = ? ) OR (" + DatabaseHelper.PLAN_DATE +"= ? AND " + DatabaseHelper.PLAN_IS_DONE + " = ? )",
-                new String[]{today, "false", "-", "false"},null);
-        */
-        //database.close();
         Binder.restoreCallingIdentity(identityToken);
     }
 
     @Override
     public void onCreate() {
-        Log.v("Factory","Factory");
+        //Log.v("Factory","Factory");
         initCursor();
         if (cursor != null) {
             cursor.moveToFirst();
@@ -97,17 +86,30 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
         * */
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_list_items_layout);
         cursor.moveToPosition(i);
-        //Log.v("WidgetFactory ",cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_TIME)));
-        remoteViews.setTextViewText(R.id.txtWidgetPlanName,"    " + cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_TITLE))+" - ");
-        remoteViews.setTextViewText(R.id.txtWidgetPlanTime,cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_TIME))+" - ");
+        remoteViews.setTextViewText(R.id.txtWidgetPlanName,"    " + cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_TITLE))+" ");
+        remoteViews.setTextViewText(R.id.txtWidgetPlanTime,cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_TIME))+" ");
         remoteViews.setTextViewText(R.id.txtWidgetPlanDuration,cursor.getString(cursor.getColumnIndex(DatabaseHelper.NEW_PLAN_DURATION_TIME)));
+
+        remoteViews.setInt(R.id.imgTimeIcon, "setBackgroundResource", R.drawable.time_icom);
+        remoteViews.setInt(R.id.imgRemainIcon, "setBackgroundResource", R.drawable.duration_icon);
+
+        switch (cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_PRIORITY))){
+            case "low":
+                remoteViews.setInt(R.id.imgPriorityIcon, "setBackgroundResource", R.drawable.low_priority);
+                break;
+            case "medium":
+                remoteViews.setInt(R.id.imgPriorityIcon, "setBackgroundResource", R.drawable.medium_priority);
+                break;
+            case "high":
+                remoteViews.setInt(R.id.imgPriorityIcon, "setBackgroundResource", R.drawable.high_priority);
+                break;
+        }
 
         if (cursor.getString(cursor.getColumnIndex(DatabaseHelper.PLAN_IS_DONE)).equals("true")) {
             remoteViews.setInt(R.id.imgTickIcon, "setBackgroundResource", R.drawable.tick_icon);
         } else {
             remoteViews.setInt(R.id.imgTickIcon, "setBackgroundResource", R.drawable.tick_icon_red);
         }
-
 
         return remoteViews;
     }

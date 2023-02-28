@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -31,12 +32,17 @@ public class Reminder extends AppCompatActivity {
 
     AppCompatButton btnAddTask;
 
+    private RadioGroup radioGroup;
+
     DBManager database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_reminder_layout);
+
+        radioGroup = findViewById(R.id.priorityRadioGroup);
+        radioGroup.clearCheck();
 
         database = new DBManager(Reminder.this);
         database.open();
@@ -47,10 +53,10 @@ public class Reminder extends AppCompatActivity {
 
         AppCompatButton btnSubmitNewReminder = findViewById(R.id.btnSubmitNewReminder);
 
-        editTaskName = findViewById(R.id.editTaskName);
-        editTaskDate = findViewById(R.id.editTaskDate);
-        editTaskTime = findViewById(R.id.editTaskTime);
-        editTaskDuration = findViewById(R.id.editTaskDuration);
+        editTaskName = findViewById(R.id.editReminderTaskName);
+        editTaskDate = findViewById(R.id.editReminderTaskDate);
+        editTaskTime = findViewById(R.id.editReminderTaskTime);
+        editTaskDuration = findViewById(R.id.editReminderTaskDuration);
 
         editTaskTime.setOnClickListener(v -> selectTime());
 
@@ -64,7 +70,28 @@ public class Reminder extends AppCompatActivity {
                 Toast.makeText(Reminder.this, "Date and Time Must be determine", Toast.LENGTH_SHORT).show();
                 return;
             }
-            database.insertNewPlane(editTaskName.getText().toString(), editTaskDate.getText().toString(), editTaskTime.getText().toString(), editTaskDuration.getText().toString(), "-");
+
+            int selectedId = radioGroup.getCheckedRadioButtonId();
+            if (selectedId == -1) {
+                Toast.makeText(Reminder.this, "No priority has been selected", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
+            String priority = "";
+            if(radioGroup.getCheckedRadioButtonId() == findViewById(R.id.chkReminderLow).getId())
+                priority = "low";
+
+
+            if(radioGroup.getCheckedRadioButtonId() == findViewById(R.id.chkReminderMedium).getId())
+                priority = "medium";
+
+
+            if (radioGroup.getCheckedRadioButtonId() == findViewById(R.id.chkReminderHigh).getId())
+                priority = "high";
+
+
+            database.insertNewPlane(editTaskName.getText().toString(), editTaskDate.getText().toString(), editTaskTime.getText().toString(), editTaskDuration.getText().toString(), "-", priority);
             editTaskName.setText("");
             editTaskDate.setText("");
             editTaskTime.setText("");

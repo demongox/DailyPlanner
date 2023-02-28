@@ -3,6 +3,7 @@ package com.hirkanico.dailyplanner;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.hirkanico.dailyplanner.classes.DailyTask;
 import com.hirkanico.dailyplanner.library.DBManager;
 
 import java.text.SimpleDateFormat;
@@ -22,13 +24,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class AddDailyTask extends AppCompatActivity {
+public class EditDailyTask extends AppCompatActivity {
 
     EditText editTaskName;
     EditText editTaskTime;
     EditText editTaskDuration;
+    EditText editTaskDate;
 
-    TextView txtShowDate;
+    TextView txtShowTodayDate;
+    TextView txtTaskDate;
+    TextView txtDayRepeat;
 
     String daySequence;
 
@@ -40,6 +45,14 @@ public class AddDailyTask extends AppCompatActivity {
     CheckBox saturday;
     CheckBox sunday;
 
+    RadioButton chkLow;
+    RadioButton chkHigh;
+    RadioButton chkMedium;
+
+    String taskId;
+
+    boolean isNotification = false;
+
     private RadioGroup radioGroup;
 
     AppCompatButton btnAddTask;
@@ -49,7 +62,7 @@ public class AddDailyTask extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_task_layout);
+        setContentView(R.layout.edit_task_layout);
 
         monday = findViewById(R.id.chkMonday);
         tuesday = findViewById(R.id.chkTuesday);
@@ -59,53 +72,50 @@ public class AddDailyTask extends AppCompatActivity {
         saturday = findViewById(R.id.chkSaturday);
         sunday = findViewById(R.id.chkSunday);
 
+        chkLow = findViewById(R.id.chkLow);
+        chkMedium = findViewById(R.id.chkMedium);
+        chkHigh = findViewById(R.id.chkHigh);
+
         radioGroup = findViewById(R.id.priorityRadioGroup);
         radioGroup.clearCheck();
 
-        database = new DBManager(AddDailyTask.this);
+        database = new DBManager(EditDailyTask.this);
         database.open();
 
-        txtShowDate = findViewById(R.id.txtShowDate);
+        txtShowTodayDate = findViewById(R.id.txtShowDate);
+        txtTaskDate = findViewById(R.id.txtTaskDate);
+        txtDayRepeat = findViewById(R.id.txtDayRepeat);
 
-        txtShowDate.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
+        txtShowTodayDate.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
 
         AppCompatButton btnSubmitNewReminder = findViewById(R.id.btnSubmitNewReminder);
 
-        editTaskName = findViewById(R.id.editTaskName);
-        editTaskTime = findViewById(R.id.editTaskDate);
-        editTaskDuration = findViewById(R.id.editTaskDuration);
+        editTaskName = findViewById(R.id.editEditTaskName);
+        editTaskTime = findViewById(R.id.editEditTaskTime);
+        editTaskDuration = findViewById(R.id.editEditTaskDuration);
+        editTaskDate = findViewById(R.id.editEditTaskDate);
 
-        //editTaskDuration.setOnClickListener(v -> selectTime());
+        txtTaskDate.setOnClickListener(v -> selectDate());
 
         editTaskTime.setOnClickListener(v -> selectTime());
 
         database.open();
 
+        getDataFromDB();
+
         btnSubmitNewReminder.setOnClickListener(view1 -> {
 
             if (editTaskTime.getText().toString().equals("") || editTaskDuration.getText().toString().equals("")) {
-                Toast.makeText(AddDailyTask.this, "Time and Duration Must be determine", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditDailyTask.this, "Time and Duration Must be determine", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             int selectedId = radioGroup.getCheckedRadioButtonId();
             if (selectedId == -1) {
-                Toast.makeText(AddDailyTask.this, "No priority has been selected", Toast.LENGTH_SHORT)
+                Toast.makeText(EditDailyTask.this, "No priority has been selected", Toast.LENGTH_SHORT)
                         .show();
                 return;
             }
-            /*
-            else {
-             *
-                RadioButton radioButton = (RadioButton) radioGroup.findViewById(selectedId);
-
-                // Now display the value of selected item
-                // by the Toast message
-                Toast.makeText(AddDailyTask.this, radioButton.getText(), Toast.LENGTH_SHORT).show();
-            }
-             */
-
-            checkDaySequence();
 
             String priority = "";
             if(radioGroup.getCheckedRadioButtonId() == findViewById(R.id.chkLow).getId())
@@ -119,7 +129,13 @@ public class AddDailyTask extends AppCompatActivity {
             if (radioGroup.getCheckedRadioButtonId() == findViewById(R.id.chkHigh).getId())
                 priority = "high";
 
-            database.insertNewPlane(editTaskName.getText().toString(), "-", editTaskTime.getText().toString(), editTaskDuration.getText().toString(), daySequence, priority);
+            if (isNotification){
+                checkDaySequence();
+                database.updateAllPlane(taskId,editTaskName.getText().toString(), "-", editTaskDuration.getText().toString(), daySequence, priority);
+            }else{
+                database.updateAllPlane(taskId,editTaskName.getText().toString(), editTaskDate.getText().toString(), editTaskDuration.getText().toString(), "-", priority);
+            }
+
             editTaskName.setText("");
             editTaskTime.setText("");
             editTaskDuration.setText("");
@@ -131,26 +147,10 @@ public class AddDailyTask extends AppCompatActivity {
             saturday.setChecked(false);
             sunday.setChecked(false);
             radioGroup.clearCheck();
-            Toast.makeText(AddDailyTask.this, "Task added", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditDailyTask.this, "Task Updated", Toast.LENGTH_SHORT).show();
+
+
         });
-
-        // Add the Listener to the RadioGroup
-        radioGroup.setOnCheckedChangeListener(
-                new RadioGroup
-                        .OnCheckedChangeListener() {
-                    @Override
-
-                    // The flow will come here when
-                    // any of the radio buttons in the radioGroup
-                    // has been clicked
-
-                    // Check which radio button has been clicked
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                        // Get the selected Radio Button
-                        RadioButton radioButton = (RadioButton) group.findViewById(checkedId);
-                    }
-                });
     }
 
     public void selectTime() {
@@ -161,7 +161,7 @@ public class AddDailyTask extends AppCompatActivity {
         int minute = c.get(Calendar.MINUTE);
 
         // on below line we are initializing our Time Picker Dialog
-        TimePickerDialog timePickerDialog = new TimePickerDialog(AddDailyTask.this,
+        TimePickerDialog timePickerDialog = new TimePickerDialog(EditDailyTask.this,
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
@@ -188,7 +188,7 @@ public class AddDailyTask extends AppCompatActivity {
         // on below line we are creating a variable for date picker dialog.
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 // on below line we are passing context.
-                AddDailyTask.this,
+                EditDailyTask.this,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year,
@@ -228,6 +228,77 @@ public class AddDailyTask extends AppCompatActivity {
         }
         if (sunday.isChecked()) {
             daySequence += "7-";
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        getDataFromDB();
+    }
+
+    public void getDataFromDB(){
+        if (getIntent().getExtras() != null) {
+            taskId = getIntent().getStringExtra("taskId");
+            //Log.d("commodityId : ", commodityId);
+            DailyTask getTask = database.getSingleTask(taskId);
+
+            editTaskName.setText(getTask.taskName);
+            editTaskTime.setText(getTask.taskTime);
+            editTaskDuration.setText(getTask.planDuration);
+
+            if (getTask.planPriority.equals("low"))
+                chkLow.setChecked(true);
+            if (getTask.planPriority.equals("medium"))
+                chkMedium.setChecked(true);
+            if (getTask.planPriority.equals("high"))
+                chkHigh.setChecked(true);
+
+            if (getTask.planRepeat.equals("-")){
+
+                isNotification = true;
+
+                txtTaskDate.setVisibility(View.VISIBLE);
+                editTaskDate.setVisibility(View.VISIBLE);
+                editTaskDate.setText(getTask.taskDate);
+
+                txtDayRepeat.setVisibility(View.INVISIBLE);
+                monday.setVisibility(View.INVISIBLE);
+                tuesday.setVisibility(View.INVISIBLE);
+                wednesday.setVisibility(View.INVISIBLE);
+                thursday.setVisibility(View.INVISIBLE);
+                friday.setVisibility(View.INVISIBLE);
+                saturday.setVisibility(View.INVISIBLE);
+                sunday.setVisibility(View.INVISIBLE);
+
+            }else {
+                txtTaskDate.setVisibility(View.INVISIBLE);
+                editTaskDate.setVisibility(View.INVISIBLE);
+
+                txtDayRepeat.setVisibility(View.VISIBLE);
+                monday.setVisibility(View.VISIBLE);
+                tuesday.setVisibility(View.VISIBLE);
+                wednesday.setVisibility(View.VISIBLE);
+                thursday.setVisibility(View.VISIBLE);
+                friday.setVisibility(View.VISIBLE);
+                saturday.setVisibility(View.VISIBLE);
+                sunday.setVisibility(View.VISIBLE);
+
+                if (getTask.planRepeat.contains("1"))
+                    monday.setChecked(true);
+                if (getTask.planRepeat.contains("2"))
+                    tuesday.setChecked(true);
+                if (getTask.planRepeat.contains("3"))
+                    wednesday.setChecked(true);
+                if (getTask.planRepeat.contains("4"))
+                    thursday.setChecked(true);
+                if (getTask.planRepeat.contains("5"))
+                    friday.setChecked(true);
+                if (getTask.planRepeat.contains("6"))
+                    saturday.setChecked(true);
+                if (getTask.planRepeat.contains("7"))
+                    sunday.setChecked(true);
+            }
         }
     }
 }

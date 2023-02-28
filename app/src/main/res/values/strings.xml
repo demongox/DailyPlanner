@@ -16,7 +16,14 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
+    <string name="task_priority">Task Priority</string>
+    <string name="low">Low</string>
+    <string name="medium">Medium</string>
+    <string name="high">High</string>
+    <string name="search">Search</string>
     <string name="all_tasks">Show All Tasks</string>
+    <string name="daily_task">Daily Task</string>
+    <string name="sample_text_view">TextView</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">This is an app widget description</string>

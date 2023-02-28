@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class AllPlanHolder extends RecyclerView.ViewHolder {
 
-    public ImageView imgIcon;
+    public ImageView imgEditIcon;
+    public ImageView imgDeleteIcon;
+    public ImageView imgPlanPriority;
     public TextView taskName;
     public TextView taskDate;
     public TextView taskTime;
@@ -20,8 +22,10 @@ public class AllPlanHolder extends RecyclerView.ViewHolder {
 
     public AllPlanHolder(@NonNull View itemView) {
         super(itemView);
-        imgIcon = (ImageView) itemView.findViewById(R.id.imgIcon);
-        taskName = (TextView) itemView.findViewById(R.id.txtPlanTitle);
+        imgEditIcon = (ImageView) itemView.findViewById(R.id.imgEditIcon);
+        imgDeleteIcon = (ImageView) itemView.findViewById(R.id.imgDeleteIcon);
+        imgPlanPriority = (ImageView) itemView.findViewById(R.id.imgPlanPriority);
+        taskName = (TextView) itemView.findViewById(R.id.txtPlanName);
         taskDate = (TextView) itemView.findViewById(R.id.txtPlanDate);
         taskTime = (TextView) itemView.findViewById(R.id.txtPlanTime);
         txtPlanDuration = (TextView) itemView.findViewById(R.id.txtPlanDuration);

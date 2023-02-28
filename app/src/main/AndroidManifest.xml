@@ -48,6 +48,9 @@
         <activity
             android:name=".ShowAllTasks"
             android:exported="false" />
+        <activity
+            android:name=".EditDailyTask"
+            android:exported="false" />
     </application>
 
 </manifest>

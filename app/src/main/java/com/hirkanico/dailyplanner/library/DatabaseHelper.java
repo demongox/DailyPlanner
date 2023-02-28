@@ -21,6 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DAILY_PLAN_ID = "plan_id";
     public static final String PLAN_DATE = "plan_date";
     public static final String PLAN_TIME = "plan_time";
+    public static final String PLAN_PRIORITY = "plan_priority";
     public static final String PLAN_IS_DONE = "plan_is_done";
 
     // Database Information
@@ -33,12 +34,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_ALL_PLAN_TABLE = "create table if not exists " + ALL_PLAN_TABLE_NAME + "(" + ID
             + " INTEGER PRIMARY KEY AUTOINCREMENT, " + PLAN_TITLE + " TEXT NOT NULL, "
             + NEW_PLAN_DOING_DATE + " TEXT NOT NULL, " + NEW_PLAN_DOING_TIME + " TEXT NOT NULL, "
-            + NEW_PLAN_DURATION_TIME + " TEXT NOT NULL, " + PLAN_REPEAT_DAY + " TEXT NOT NULL);";
+            + NEW_PLAN_DURATION_TIME + " TEXT NOT NULL, " + PLAN_REPEAT_DAY + " TEXT NOT NULL, " + PLAN_PRIORITY + " TEXT NOT NULL);";
 
     private static final String CREATE_DAILY_PLANNER_TABLE = "create table if not exists " + DAILY_PLANNER_TABLE_NAME + "(" + ID
             + " INTEGER PRIMARY KEY AUTOINCREMENT, " + DAILY_PLAN_ID + " TEXT NOT NULL, "
             + PLAN_DATE + " TEXT NOT NULL, " + PLAN_TIME + " TEXT NOT NULL, "
-            + NEW_PLAN_DURATION_TIME + " TEXT NOT NULL, "+ PLAN_IS_DONE + " TEXT NOT NULL);";
+            + NEW_PLAN_DURATION_TIME + " TEXT NOT NULL, "+ PLAN_IS_DONE + " TEXT NOT NULL, "+ PLAN_PRIORITY + " TEXT NOT NULL);";
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
